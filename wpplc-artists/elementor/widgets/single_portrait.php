@@ -4,23 +4,24 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Controls_Manager;
 use Elementor\Scheme_Color;
+use Elementor\Scheme_Typography;
 
-class WPPLC_Artist_PortraitSlider extends \Elementor\Widget_Base {
+class WPPLC_Artist_SinglePortrait extends \Elementor\Widget_Base {
 
     public function __construct($data = [], $args = null) {
         parent::__construct($data, $args);
     }
 
     public function get_name() {
-        return 'wpplcartistsliderportrait';
+        return 'wpplcartistsingleportrait';
     }
 
     public function get_title() {
-        return __( 'Artist Slider Portrait', 'wpplc-artist' );
+        return __( 'Artist Portrait', 'wpplc-artist' );
     }
 
     public function get_icon() {
-        return 'fa fa-images';
+        return 'fa fa-user';
     }
 
     public function get_categories() {
@@ -51,33 +52,16 @@ class WPPLC_Artist_PortraitSlider extends \Elementor\Widget_Base {
                 }
             }
             ?>
-            <a href="<?=$sHref?>" style="margin:0; padding:0;">
-                <div style="background:url(<?=$aImage[0]?>) no-repeat; background-size:contain; width:100%; min-height:420px;" class="plcArtSliderPortrait" title="<?=$oArtist->post_title?>">
-                    <div class="plcArtSlidPortDesc" style="z-index:6; width:100%; height:100px; position:absolute; bottom:0; background-color: rgba(0, 0, 0, .8); text-align:center;">
-                        <h3 class="plcArtSlidPortTitle" style="padding:0;"><?=$oArtist->post_title?></h3>
-                            <i class="<?=$aSettings['link_icon']['value']?> plcArtLnkIcn" aria-hidden="true"></i>&nbsp;
-                            <span class="plcArtSlidLink"><?=$sLinkLabel?></span>
-                    </div>
-                    <div class="plcArtSldHoverBg" style="z-index:3; position:absolute; top:0; background:url(<?=$aImageHvr[0]?>) no-repeat; background-size:contain; width:100%; min-height:420px;" class="plcArtSliderPortrait">
-                    </div>
-                </div>
-            </a>
-            <script>
-                /**
-                var $lastbG = '';
-                jQuery('.plcArtSliderPortrait').on('mouseover',function() {
-                    var bgHoverUrl = jQuery(this).find('.plcArtSldHoverBg').val();
-                    jQuery(this).css({background:'url('+bgHoverUrl+')'});
-                }).on('mouseout',function() {
-                    var bgUrl = jQuery(this).find('.plcArtSldBg').val();
-                    //jQuery(this).css({background:'url('+bgUrl+')'});
-                    jQuery(this).animate({opacity: 0}, 'slow', function() {
-                        jQuery(this)
-                            .css({'background': 'url('+bgUrl+')'})
-                            .animate({opacity: 1});
-                    });
-                });**/
-            </script>
+            <div style="width:33%; float:left;">
+                <img src="<?=$aImage[0]?>" style="max-width:165px; max-height:200px;" title="<?=$oArtist->post_title?>" alt="<?=$oArtist->post_title?>" />
+            </div>
+            <div style="width:66%; float:left;">
+                <h3 class="plcArtSlidPortTitle" style="padding:0;"><?=$oArtist->post_title?></h3>
+                <p class="plcArtPortraitText"><?=$oArtist->post_content?></p>
+                <a href="<?=$sHref?>" style="margin:0; padding:0; display: inline-block;">
+                    <i class="<?=$aSettings['link_icon']['value']?> plcArtLnkIcn" aria-hidden="true"></i>&nbsp;
+                </a>
+            </div>
             <?php
         }
     }
@@ -222,10 +206,48 @@ class WPPLC_Artist_PortraitSlider extends \Elementor\Widget_Base {
          * Artist "View More" Link Style Settings
          */
         $this->start_controls_section(
+            'sliderport_descboxtext',
+            [
+                'label' => __( 'Artist Text', 'wpplc-artist' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'sliderport_descboxtext_color',
+            [
+                'label' => __( 'Color', 'wpplc-artist' ),
+                'type' => Controls_Manager::COLOR,
+                'scheme' => [
+                    'type' => Scheme_Color::get_type(),
+                    'value' => Scheme_Color::COLOR_1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .plcArtPortraitText' => 'color: {{VALUE}}',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'sliderport_descboxtext_typo',
+                'label' => __( 'Typography', 'wpplc-artist' ),
+                'scheme' => Scheme_Typography::TYPOGRAPHY_1,
+                'selector' => '{{WRAPPER}} .plcArtPortraitText',
+            ]
+        );
+
+        $this->end_controls_section('sliderport_descboxtext');
+
+        /**
+         * Artist "View More" Link Style Settings
+         */
+        $this->start_controls_section(
             'sliderport_descboxlink',
             [
                 'label' => __( 'Artist Link', 'wpplc-artist' ),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
@@ -234,7 +256,7 @@ class WPPLC_Artist_PortraitSlider extends \Elementor\Widget_Base {
             [
                 'name' => 'sliderport_descboxlink_typo',
                 'label' => __( 'Typography', 'wpplc-artist' ),
-                'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
+                'scheme' => Scheme_Typography::TYPOGRAPHY_1,
                 'selector' => '{{WRAPPER}} .plcArtSlidLink',
             ]
         );
