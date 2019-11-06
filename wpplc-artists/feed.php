@@ -15,7 +15,7 @@ if (is_array($aGalleryIDs)) {
             $sImg = wp_get_attachment_image_src($iImgID,'full');
             ?>
             <div class="infinite_scroll_item">
-                <a href="<?= $sImg[0] ?>" data-lightbox="tattoo-gallery" title="Bild">
+                <a href="<?= $sImg[0] ?>" data-lightbox="roadtrip" title="Bild">
                     <img src="<?= $sImg[0] ?>"/>
                 </a>
             </div>

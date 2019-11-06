@@ -50,6 +50,7 @@ class WPPLC_Artist_SinglePortrait extends \Elementor\Widget_Base {
                 if($iArtSalution == 2) {
                     $sLinkLabel = 'Mehr über '.explode(' ',$oArtist->post_title)[0].' & ihre Arbeiten';
                 }
+                $sSocialIn = get_post_meta( $iArtistID, 'artist_social_in', true );
             }
             ?>
             <div style="width:33%; float:left;">
@@ -58,8 +59,9 @@ class WPPLC_Artist_SinglePortrait extends \Elementor\Widget_Base {
             <div style="width:66%; float:left;">
                 <h3 class="plcArtSlidPortTitle" style="padding:0;"><?=$oArtist->post_title?></h3>
                 <p class="plcArtPortraitText"><?=$oArtist->post_content?></p>
-                <a href="<?=$sHref?>" style="margin:0; padding:0; display: inline-block;">
+                <a href="<?=$sSocialIn?>" style="margin:0; padding:0; display: inline-block;" target="_blank">
                     <i class="<?=$aSettings['link_icon']['value']?> plcArtLnkIcn" aria-hidden="true"></i>&nbsp;
+                    <span class="plcArtSlidLink">Folgt <?=explode(' ',$oArtist->post_title)[0]?> auf Instagram</span>
                 </a>
             </div>
             <?php

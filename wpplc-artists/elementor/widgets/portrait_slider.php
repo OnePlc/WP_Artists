@@ -51,17 +51,23 @@ class WPPLC_Artist_PortraitSlider extends \Elementor\Widget_Base {
                 }
             }
             ?>
-            <a href="<?=$sHref?>" style="margin:0; padding:0;">
-                <div style="background:url(<?=$aImage[0]?>) no-repeat; background-size:contain; width:100%; min-height:420px;" class="plcArtSliderPortrait" title="<?=$oArtist->post_title?>">
+            <a href="<?=$sHref?>" style="margin:0; padding:0; z-index:9;">
+                <div id="plcArtSlid-<?=$iArtistID?>" style="background:url(<?=$aImage[0]?>) no-repeat; background-size:contain; width:100%; min-height:420px;" class="plcArtSliderPortrait" title="<?=$oArtist->post_title?>">
                     <div class="plcArtSlidPortDesc" style="z-index:6; width:100%; height:100px; position:absolute; bottom:0; background-color: rgba(0, 0, 0, .8); text-align:center;">
                         <h3 class="plcArtSlidPortTitle" style="padding:0;"><?=$oArtist->post_title?></h3>
                             <i class="<?=$aSettings['link_icon']['value']?> plcArtLnkIcn" aria-hidden="true"></i>&nbsp;
                             <span class="plcArtSlidLink"><?=$sLinkLabel?></span>
                     </div>
-                    <div class="plcArtSldHoverBg" style="z-index:3; position:absolute; top:0; background:url(<?=$aImageHvr[0]?>) no-repeat; background-size:contain; width:100%; min-height:420px;" class="plcArtSliderPortrait">
-                    </div>
+                    <!--
+                    <div class="plcArtSldHoverBg" style="z-index:3; position:absolute; top:0; background:url(<?=$aImageHvr[0]?>) no-repeat; background-size:contain; width:100%; min-height:420px;">
+                    </div> -->
                 </div>
             </a>
+            <style>
+                #plcArtSlid-<?=$iArtistID?>:hover {
+                    background:url(<?=$aImageHvr[0]?>) no-repeat !important;
+                }
+            </style>
             <script>
                 /**
                 var $lastbG = '';
